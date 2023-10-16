@@ -1375,7 +1375,6 @@
     "decimals": 6,
     "coinGeckoId": "",
     "tokenType": "ibc",
-    "tokenVerification": "external",
     "ibc": {
       "hash": "012D069D557C4DD59A670AA17E809CB7A790D778E364D0BC0A3248105DA6432D",
       "path": "squirelzzzzzzzzzzzzzzzzzz",
@@ -1407,7 +1406,6 @@
   },
   {
     "name": "RAC",
-    "denom": "ibc/0F3A724673F682CF7812D0ED1A0C41D344C09E94C939E79D12712DC7C0676E80",
     "logo": "https://raw.githubusercontent.com/cosmos/chain-registry/master/migaloo/images/rac.png",
     "symbol": "RAC",
     "decimals": 6,
@@ -1433,54 +1431,8 @@
     "coinGeckoId": "",
     "tokenType": "ibc",
     "tokenVerification": "external",
-    "ibc": {
-      "hash": "57AA1A70A4BC9769C525EBF6386F7A21536E04A79D62E1981EFCEF9428EBB205",
-      "path": "squirelzzzzzzzzzzzzzzzzzz",
-      "channelId": "",
-      "decimals": 6,
-      "symbol": "KAVA",
-      "baseDenom": "KAVA",
-      "isNative": false
-    }
   },
-  {
-    "name": "Hard",
-    "denom": "ibc/D6C28E07F7343360AC41E15DDD44D79701DDCA2E0C2C41279739C8D4AE5264BC",
-    "logo": "https://raw.githubusercontent.com/cosmos/chain-registry/master/kava/images/hard.png",
-    "symbol": "HARD",
-    "decimals": 6,
-    "coinGeckoId": "",
-    "tokenType": "ibc",
-    "tokenVerification": "external",
-    "ibc": {
-      "hash": "D6C28E07F7343360AC41E15DDD44D79701DDCA2E0C2C41279739C8D4AE5264BC",
-      "path": "squirelzzzzzzzzzzzzzzzzzz",
-      "channelId": "",
-      "decimals": 6,
-      "symbol": "HARD",
-      "baseDenom": "HARD",
-      "isNative": false
-    }
-  },
-  {
-    "name": "Swap",
-    "denom": "ibc/70CF1A54E23EA4E480DEDA9E12082D3FD5684C3483CBDCE190C5C807227688C5",
-    "logo": "https://raw.githubusercontent.com/cosmos/chain-registry/master/kava/images/swp.png",
-    "symbol": "SWP",
-    "decimals": 6,
-    "coinGeckoId": "",
-    "tokenType": "ibc",
-    "tokenVerification": "external",
-    "ibc": {
-      "hash": "70CF1A54E23EA4E480DEDA9E12082D3FD5684C3483CBDCE190C5C807227688C5",
-      "path": "squirelzzzzzzzzzzzzzzzzzz",
-      "channelId": "",
-      "decimals": 6,
-      "symbol": "SWP",
-      "baseDenom": "SWP",
-      "isNative": false
-    }
-  },
+
   {
     "name": "USDX",
     "denom": "ibc/C78F65E1648A3DFE0BAEB6C4CDA69CC2A75437F1793C0E6386DFDA26393790AE",
@@ -1502,25 +1454,6 @@
   },
   {
     "name": "Tether USD",
-    "denom": "ibc/58D95D27C82FAC8D0F9F00C3F6097FD70DD6276423768EA95DBFAA2AF8DAE9A2",
-    "logo": "untracked.svg",
-    "symbol": "USDT",
-    "decimals": 6,
-    "coinGeckoId": "",
-    "tokenType": "ibc",
-    "tokenVerification": "external",
-    "ibc": {
-      "hash": "58D95D27C82FAC8D0F9F00C3F6097FD70DD6276423768EA95DBFAA2AF8DAE9A2",
-      "path": "squirelzzzzzzzzzzzzzzzzzz",
-      "channelId": "",
-      "decimals": 6,
-      "symbol": "USDT",
-      "baseDenom": "USDT",
-      "isNative": false
-    }
-  },
-  {
-    "name": "Tether USD",
     "denom": "ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB",
     "logo": "untracked.svg",
     "symbol": "USDT",
@@ -1537,5 +1470,7 @@
       "baseDenom": "USDT",
       "isNative": false
     }
-  }
+  },
+  {"name": "rawr"},
+  {"snioo": "bips"}
 ]

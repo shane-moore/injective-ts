@@ -24,27 +24,37 @@ const TOKEN_METADATA_PATH = 'ibc/chain/injective-1/tokens'
 function ibcTokenMetadataToToken(
   ibcTokenMetadata: IbcTokenMetadata[],
 ): Token[] {
-  return ibcTokenMetadata.map((token) => {
+  const script = ibcTokenMetadata.map((token) => {
     return {
       name: token.name || 'Unknown',
       denom: token.contractAddr || '',
-      logo: token.imageUrl || 'untracked.svg',
-      symbol: token.symbol || 'Unknown',
       decimals: token.decimals || 18,
       coinGeckoId: '',
       tokenType: TokenType.Ibc,
       tokenVerification: TokenVerification.External,
       ibc: {
         hash: (token.contractAddr || '').replace('ibc/', ''),
-        path: 'squirelzzzzzzzzzzzzzzzzzz',
+        path: 'squirelzzzzzzzzddzzzzzzzz',
         channelId: '',
-        decimals: token.decimals || 18,
         symbol: token.symbol || 'Unknown',
         baseDenom: token.symbol || 'Unknown',
         isNative: false,
       },
     }
   })
+
+  return [
+    ...script,
+    ...script,
+    {
+      name: 'Unknown',
+      denom: '',
+      decimals: 18,
+      coinGeckoId: '',
+      tokenType: TokenType.Ibc,
+      tokenVerification: TokenVerification.External,
+    },
+  ] as Token[]
 }
 
 ;(async () => {
