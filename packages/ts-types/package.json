@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/ts-types",
+  "name": "test-ts-types-123",
   "description": "List of types that can be reused throughout Injective's projects.",
   "version": "1.14.1-beta.1",
   "sideEffects": false,

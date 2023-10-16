@@ -1,9 +1,9 @@
-name: Publish dev
+name: Publish test
 
 on:
   push:
     branches:
-      - dev
+      - test
 
 jobs:
   publish:
@@ -50,9 +50,9 @@ jobs:
           lerna version prerelease --preid beta --force-git-tag --no-changelog --yes --no-git-tag-version --no-push
           lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file --dry-run
 
-      - name: 'Broadcast published versions on Slack'
-        run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE
-        env:
-          GIT_ACTOR: ${{ github.actor }}
-          SLACK_API: ${{ secrets.SLACK_API }}
-          GIT_LATEST_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+      # - name: 'Broadcast published versions on Slack'
+      #   run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE
+      #   env:
+      #     GIT_ACTOR: ${{ github.actor }}
+      #     SLACK_API: ${{ secrets.SLACK_API }}
+      #     GIT_LATEST_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}

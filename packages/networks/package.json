@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/networks",
+  "name": "test-networks-123",
   "description": "Endpoints, networks, etc. Can be reused throughout Injective's projects.",
   "version": "1.14.1-beta.2",
   "sideEffects": false,

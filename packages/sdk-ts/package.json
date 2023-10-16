@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/sdk-ts",
+  "name": "test-sdk-ts-123",
   "description": "SDK in TypeScript for building Injective applications in a browser, node, and react native environment.",
   "version": "1.14.1-beta.12",
   "sideEffects": false,
