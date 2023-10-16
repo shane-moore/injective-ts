@@ -1,9 +1,9 @@
-name: Publish test
+name: Publish dev
 
 on:
   push:
     branches:
-      - test
+      - dev
 
 jobs:
   publish:
@@ -23,6 +23,11 @@ jobs:
 
       - name: 'Setup lerna@6.6.1'
         run: yarn global add lerna@6.6.1 --ignore-engines
+
+      - name: Set up Git user
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Build dependencies
         run: |
@@ -45,9 +50,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"
-          lerna version prerelease --preid beta --force-git-tag --no-changelog --yes --no-git-tag-version --no-push
+          lerna version prerelease --preid beta --force-git-tag --no-changelog --yes
+          # Comment out the next line for dry run
           # lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file
 
       # - name: 'Broadcast published versions on Slack'
