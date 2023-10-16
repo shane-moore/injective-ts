@@ -16,7 +16,7 @@ type IbcTokenMetadata = {
   imageUrl: string
   isTrading: boolean
 }
-
+/* comment for testing */
 const ibcTokenMetadataApi = new HttpRestClient('https://api.tfm.com/api/v1/')
 
 const TOKEN_METADATA_PATH = 'ibc/chain/injective-1/tokens'
