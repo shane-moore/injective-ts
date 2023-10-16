@@ -36,7 +36,7 @@ function ibcTokenMetadataToToken(
       tokenVerification: TokenVerification.External,
       ibc: {
         hash: (token.contractAddr || '').replace('ibc/', ''),
-        path: 'squirel',
+        path: 'squirelz',
         channelId: '',
         decimals: token.decimals || 18,
         symbol: token.symbol || 'Unknown',
