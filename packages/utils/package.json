@@ -1,7 +1,7 @@
 {
   "name": "test-utils-123",
   "description": "List of utils and helper functions that can be reused throughout Injective's projects.",
-  "version": "1.14.1-beta.1",
+  "version": "1.14.1-beta.2",
   "sideEffects": false,
   "author": {
     "name": "Bojan Angjelkoski",

@@ -1,6 +1,6 @@
 {
   "name": "test-token-utils-123",
-  "version": "1.14.1-beta.1",
+  "version": "1.14.1-beta.2",
   "description": "Token Utils is a package for querying different data about tokens",
   "sideEffects": false,
   "author": {
