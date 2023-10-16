@@ -2,8 +2,9 @@
   "name": "@shane-moore/injective-ts",
   "version": "0.0.1",
   "main": "index.js",
+  "private": "true",
   "license": "Apache-2.0",
-  "author": "@InjectiveLabs",
+  "author": "shane-moore",
   "repository": "https://github.com/shane-moore/injective-ts",
   "workspaces": {
     "packages": [
