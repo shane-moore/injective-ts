@@ -3,7 +3,7 @@ name: Publish dev
 on:
   push:
     branches:
-      - dev
+      - test
 
 jobs:
   publish:
