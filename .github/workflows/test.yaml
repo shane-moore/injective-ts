@@ -52,7 +52,7 @@ jobs:
         run: |
           lerna version prerelease --preid beta --force-git-tag --no-changelog --yes
 
-          lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file --access public
+          lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file
 
       # - name: 'Broadcast published versions on Slack'
       #   run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE

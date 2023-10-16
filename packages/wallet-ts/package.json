@@ -1,5 +1,5 @@
 {
-  "name": "@shanemoore/wallet-ts",
+  "name": "@shane-moore/wallet-ts",
   "description": "A convenient way to use and interact with different types of wallets on Injective.",
   "version": "1.14.1-beta.15",
   "sideEffects": false,

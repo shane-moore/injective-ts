@@ -1,5 +1,5 @@
 {
-  "name": "@shanemoore/exceptions",
+  "name": "@shane-moore/exceptions",
   "description": "List of exceptions that can be reused throughout Injective's projects.",
   "version": "1.14.1-beta.3",
   "sideEffects": false,
