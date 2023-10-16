@@ -831,7 +831,7 @@ export default {
 
   AXL: {
     name: 'Axelar',
-    logo: 'axelar.jpeg',
+    logo: 'axelar.svg',
     symbol: 'AXL',
     decimals: 6,
     coinGeckoId: 'axelar',
@@ -1020,7 +1020,7 @@ export default {
     name: 'PROJ',
     logo: 'projx.png',
     symbol: 'PROJ',
-    decimals: 6,
+    decimals: 18,
     coinGeckoId: '',
   },
 
@@ -1815,5 +1815,37 @@ export default {
       hash: 'C20C0A822BD22B2CEF0D067400FCCFB6FAEEE9E91D360B4E0725BD522302D565',
       tokenType: TokenType.Ibc,
     },
+  },
+
+  GOLD: {
+    name: 'GOLD',
+    symbol: 'GOLD',
+    decimals: 18,
+    logo: 'gold.svg',
+    coinGeckoId: '',
+  },
+
+  EVINDEX: {
+    name: 'EVIINDEX',
+    symbol: 'EVIINDEX',
+    decimals: 18,
+    logo: 'truEVINDEX.svg',
+    coinGeckoId: '',
+  },
+
+  TRUCPI: {
+    name: 'TRUCPI',
+    symbol: 'TRUCPI',
+    decimals: 18,
+    logo: 'truflation.svg',
+    coinGeckoId: '',
+  },
+
+  TIA: {
+    name: 'Celestia',
+    symbol: 'TIA',
+    decimals: 6,
+    logo: 'tia.webp',
+    coinGeckoId: '',
   },
 } as Record<string, TokenMeta>
