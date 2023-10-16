@@ -42,8 +42,7 @@ jobs:
 
       - name: 'Commit ibcTokenMetadata.json if changed'
         run: |
-          git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json
-          git diff --cached --exit-code || git commit -m "Automatically update ibcTokenMetadata.json"
+          git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || git commit -m "Automatically update ibcTokenMetadata.json"
 
       - name: Version and publish (Dry Run)
         env:
