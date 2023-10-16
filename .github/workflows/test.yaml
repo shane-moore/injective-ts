@@ -44,7 +44,6 @@ jobs:
         run: |
           git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json
           git diff --cached --exit-code || git commit -m "Automatically update ibcTokenMetadata.json"
-        continue-on-error: true
 
       - name: Version and publish (Dry Run)
         env:
