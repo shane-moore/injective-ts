@@ -30,16 +30,16 @@ jobs:
           yarn install --ignore-engines
           yarn build
 
+      - name: 'Setup npm'
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: 'Commit ibcTokenMetadata.json if changed'
         run: |
           git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json
           git diff --cached --exit-code || git commit -m "Automatically update ibcTokenMetadata.json"
         continue-on-error: true
-
-      - name: 'Setup npm'
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Version and publish (Dry Run)
         env:
@@ -48,7 +48,7 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           lerna version prerelease --preid beta --force-git-tag --no-changelog --yes --no-git-tag-version --no-push
-          lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file --dry-run
+          # lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file
 
       # - name: 'Broadcast published versions on Slack'
       #   run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE
