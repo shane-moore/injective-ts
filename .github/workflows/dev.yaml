@@ -1,9 +1,9 @@
-name: Publish dev
+name: Publish Test
 
 on:
   push:
     branches:
-      - dev
+      - test2
 
 jobs:
   publish:
@@ -43,29 +43,68 @@ jobs:
           yarn install --ignore-engines
           yarn build
 
-      - name: Setup npm
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Checkout shane-moore/chainlist repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'shane-moore/chainlist'
+          ref: 'main'
+          token: ${{ secrets.GH_TOKEN }}
+          path: 'chainlist'
 
-      - name: 'Commit ibcTokenMetadata.json if changed'
+      - name: Create new branch for assets update
         run: |
-          git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || (git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json && git commit -m "Automatically update ibcTokenMetadata.json")
+          cd chainlist
+          git checkout -b update-assets-${{ github.run_id }}
 
-      - name: Version and publish
+      - name: Replace assets.json with automated-assets.json
         run: |
-          lerna version prerelease --preid beta --force-git-tag --no-changelog --yes
-          lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file
+          cp ../packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chain/injective/assets.json
+
+      - name: Commit and push changes
+        run: |
+          cd chainlist
+          git add chain/injective/assets.json
+          git commit -m "Automated update of assets.json"
+          git push -u origin update-assets-${{ github.run_id }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Broadcast published versions on Slack
-        run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE
-        env:
-          GIT_ACTOR: ${{ github.actor }}
-          SLACK_API: ${{ secrets.SLACK_API }}
-          GIT_LATEST_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: "Automated update of assets.json"
+          title: "Automate update of assets.json"
+          branch: "update-assets-${{ github.run_id }}"
+          base: "main" # The branch you want to merge into on your fork
+          body: "This PR updates the assets.json with new token metadata"
+          labels: "automated-pr"
+          reviewers: "shane-moore" # Replace with actual reviewer(s) if necessary
+          working-directory: ./chainlist
+
+      # - name: Setup npm
+      #   run: |
+      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      #     npm whoami
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # - name: 'Commit ibcTokenMetadata.json if changed'
+      #   run: |
+      #     git diff --exit-code -- packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json || (git add packages/sdk-ui-ts/src/services/ibc/ibcTokenMetadata.json && git commit -m "Automatically update ibcTokenMetadata.json")
+
+      # - name: Version and publish
+      #   run: |
+      #     lerna version prerelease --preid beta --force-git-tag --no-changelog --yes
+      #     lerna publish from-git --force-git-tag --dist-tag next --yes --summary-file
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # - name: Broadcast published versions on Slack
+      #   run: node etc/slack --api=$SLACK_API --actor=$GIT_ACTOR --commit-message=$GIT_LATEST_COMMIT_MESSAGE
+      #   env:
+      #     GIT_ACTOR: ${{ github.actor }}
+      #     SLACK_API: ${{ secrets.SLACK_API }}
+      #     GIT_LATEST_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
