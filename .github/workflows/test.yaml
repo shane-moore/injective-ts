@@ -70,10 +70,10 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+          path: './chainlist'
           commit-message: 'Automated update of assets.json'
           title: 'Automate update of assets.json'
           branch: 'update-assets-${{ github.run_id }}'
           base: 'main'
           body: 'This PR updates the assets.json with new token metadata'
           labels: 'automated-pr'
-          reviewers: 'shane-moore'
