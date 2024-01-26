@@ -45,7 +45,7 @@ jobs:
 
       - name: Replace assets.json with automated-assets.json
         run: |
-          cp ../../packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chain/injective/assets.json
+          pwd
 
       - name: Commit and push changes
         run: |
