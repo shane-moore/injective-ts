@@ -47,19 +47,17 @@ jobs:
         run: |
           cp ./packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chainlist/chain/injective/assets.json
 
-      - name: Set up Git user
+      - name: Commit and push changes
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-      - name: Commit and push changes
-        run: |
           cd chainlist
           git add chain/injective/assets.json
           git commit -m "Automated update of assets.json"
           git push -u origin update-assets-${{ github.run_id }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
