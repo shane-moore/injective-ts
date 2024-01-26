@@ -30,11 +30,6 @@ jobs:
         with:
           node-version: '16.18.1'
 
-      - name: Install Dependencies for sdk-ui-ts
-        run: |
-          cd packages/sdk-ui-ts
-          yarn install --ignore-engines && yarn build
-
       - name: Checkout shane-moore/chainlist repository
         uses: actions/checkout@v2
         with:
