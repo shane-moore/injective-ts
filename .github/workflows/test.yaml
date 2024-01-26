@@ -77,4 +77,3 @@ jobs:
           body: 'This PR updates the assets.json with new token metadata'
           labels: 'automated-pr'
           reviewers: 'shane-moore'
-          working-directory: ./chainlist
