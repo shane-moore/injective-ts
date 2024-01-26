@@ -1,0 +1,80 @@
+name: Publish Test
+
+on:
+  push:
+    branches:
+      - test2
+
+jobs:
+  publish:
+    if: true
+    runs-on: ubuntu-latest
+
+    permissions:
+      deployments: write
+      contents: write
+      statuses: write
+      actions: write
+      checks: read
+      pull-requests: write
+
+
+    steps:
+      - name: Checkout # Download code from the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Checkout all branches and tags
+
+      - name: 'Use NodeJS 16'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.18.1'
+
+      - name: Install Dependencies for sdk-ui-ts
+        run: |
+          cd packages/sdk-ui-ts
+          yarn install --ignore-engines
+
+      - name: Generate automated-assets.json
+        run: |
+          cd packages/sdk-ui-ts
+          yarn get-cosmostation-tokens
+
+      - name: Checkout shane-moore/chainlist repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'shane-moore/chainlist'
+          ref: 'main'
+          token: ${{ secrets.GH_TOKEN }}
+          path: 'chainlist'
+
+      - name: Create new branch for assets update
+        run: |
+          cd chainlist
+          git checkout -b update-assets-${{ github.run_id }}
+
+      - name: Replace assets.json with automated-assets.json
+        run: |
+          cp ../../packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chain/injective/assets.json
+
+      - name: Commit and push changes
+        run: |
+          cd chainlist
+          git add chain/injective/assets.json
+          git commit -m "Automated update of assets.json"
+          git push -u origin update-assets-${{ github.run_id }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'Automated update of assets.json'
+          title: 'Automate update of assets.json'
+          branch: 'update-assets-${{ github.run_id }}'
+          base: 'main'
+          body: 'This PR updates the assets.json with new token metadata'
+          labels: 'automated-pr'
+          reviewers: 'shane-moore'
+          working-directory: ./chainlist
