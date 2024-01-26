@@ -56,14 +56,14 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
 
 
-      - name: Commit and push changes
-        run: |
-          cd chainlist
-          git add chain/injective/assets.json
-          git commit -m "Automated update of assets.json"
-          git push -u origin update-assets-${{ github.run_id }}
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: Commit and push changes
+      #   run: |
+      #     cd chainlist
+      #     git add chain/injective/assets.json
+      #     git commit -m "Automated update of assets.json"
+      #     git push -u origin update-assets-${{ github.run_id }}
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
       - name: Create pull request
