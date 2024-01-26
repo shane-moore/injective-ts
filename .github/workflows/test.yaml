@@ -47,6 +47,11 @@ jobs:
         run: |
           cp ./packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chainlist/chain/injective/assets.json
 
+      - name: Set up Git user
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Commit and push changes
         run: |
           cd chainlist
