@@ -23,8 +23,11 @@ const ENDPOINTS = getNetworkEndpoints(Network.Mainnet)
 const bankApi = new ChainGrpcBankApi(ENDPOINTS.grpc)
 const denomClient = new DenomClient(Network.Mainnet)
 const chainListClient = new HttpRestClient('https://raw.githubusercontent.com/')
+
 const ASSETS_JSON_PATH =
   '/shane-moore/chainlist/main/chain/injective/assets.json'
+const COSMOSTATION_BRANCH_NAME = `update-injective-assets-${new Date().getTime()}`
+const COSMOSTATION_REPO_PATH = './chainlist'
 
 const githubToken = process.argv
   .find((arg) => arg.startsWith('--GITHUB_TOKEN='))
@@ -153,8 +156,9 @@ function convertToCosmostationTokens(
   )
 }
 
-async function createPullRequest(branchName: string, githubToken: string) {
+async function createPullRequest(githubToken: string) {
   const githubClient = new HttpRestClient('https://api.github.com/')
+
   githubClient.setConfig({
     headers: {
       Authorization: `token ${githubToken}`,
@@ -163,10 +167,10 @@ async function createPullRequest(branchName: string, githubToken: string) {
   })
 
   const pullRequestData = {
-    title: 'Automate update of assets.json',
-    head: branchName,
+    title: 'Add Injective assets automatically',
+    head: COSMOSTATION_BRANCH_NAME,
     base: 'main',
-    body: 'This PR updates the assets.json with new token metadata',
+    body: "This PR updates Injective's assets.json with new token metadata automatically.",
   }
 
   try {
@@ -174,10 +178,42 @@ async function createPullRequest(branchName: string, githubToken: string) {
       '/repos/shane-moore/chainlist/pulls',
       pullRequestData,
     )) as any
+
     console.log(`Pull request created: ${response.data.html_url}`)
   } catch (error) {
     console.error(`Error creating pull request: ${error}`)
   }
+}
+
+async function createCosmostationBranch(tokens: CosmostationToken[]) {
+  /**
+   * Check if cosmostation repo exists on your local and remove if so
+   */
+  if (fs.existsSync(COSMOSTATION_REPO_PATH)) {
+    execSync(`rm -rf ${COSMOSTATION_REPO_PATH}`)
+  }
+
+  execSync(
+    `git clone https://github.com/shane-moore/chainlist.git ${COSMOSTATION_REPO_PATH}`,
+  )
+
+  process.chdir(COSMOSTATION_REPO_PATH)
+  execSync(`git checkout -b ${COSMOSTATION_BRANCH_NAME}`)
+  console.log('New branch created.')
+
+  /** Ensure new metadata are copied over before proceeding */
+  await fsPromises.writeFile(
+    './chain/injective/assets.json',
+    JSON.stringify(tokens, null, 2),
+  )
+
+  console.log('assets.json updated.')
+
+  execSync('git add chain/injective/assets.json')
+  execSync(`git commit -m "chore: automated update of injective assets.json"`)
+  execSync(`git push -u origin ${COSMOSTATION_BRANCH_NAME}`)
+
+  console.log('Changes pushed to remote.')
 }
 
 ;(async () => {
@@ -190,43 +226,21 @@ async function createPullRequest(branchName: string, githubToken: string) {
 
     const bankTokens = (await fetchSupplyTokenMeta()) as Token[]
 
-    const convertedTokens = convertToCosmostationTokens(
+    const convertedCosmostationTokens = convertToCosmostationTokens(
       bankTokens,
       existingCosmostationTokens,
     )
 
-    const branchName = `update-assets-${new Date().getTime()}`
-    const repoPath = './chainlist'
+    await createCosmostationBranch(convertedCosmostationTokens)
+
+    await createPullRequest(githubToken)
 
     /**
      * Check if cosmostation repo exists on your local and remove if so
      */
-    if (fs.existsSync(repoPath)) {
-      execSync(`rm -rf ${repoPath}`)
+    if (fs.existsSync(COSMOSTATION_REPO_PATH)) {
+      execSync(`rm -rf ${COSMOSTATION_REPO_PATH}`)
     }
-
-    execSync(
-      `git clone https://github.com/shane-moore/chainlist.git ${repoPath}`,
-    )
-
-    process.chdir(repoPath)
-    execSync(`git checkout -b ${branchName}`)
-    console.log('New branch created.')
-
-    /** Ensure new metadata are copied over before proceeding */
-    await fsPromises.writeFile(
-      './chain/injective/assets.json',
-      JSON.stringify(convertedTokens, null, 2),
-    )
-
-    console.log('assets.json updated.')
-
-    execSync('git add chain/injective/assets.json')
-    execSync(`git commit -m "Automated update of assets.json"`)
-    execSync(`git push -u origin ${branchName}`)
-    console.log('Changes pushed to remote.')
-
-    await createPullRequest(branchName, githubToken)
   } catch (error) {
     console.error(`Error: ${error}`)
   }
