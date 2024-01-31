@@ -1,78 +1,78 @@
-name: Publish Test
+# name: Publish Test
 
-on:
-  push:
-    branches:
-      - test2
+# on:
+#   push:
+#     branches:
+#       - test2
 
-jobs:
-  publish:
-    if: true
-    runs-on: ubuntu-latest
+# jobs:
+#   publish:
+#     if: true
+#     runs-on: ubuntu-latest
 
-    permissions:
-      deployments: write
-      contents: write
-      statuses: write
-      actions: write
-      checks: read
-      pull-requests: write
-
-
-    steps:
-      - name: Checkout # Download code from the repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Checkout all branches and tags
-
-      - name: 'Use NodeJS 16'
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.18.1'
-
-      - name: Checkout shane-moore/chainlist repository
-        uses: actions/checkout@v3
-        with:
-          repository: 'shane-moore/chainlist'
-          ref: 'main'
-          token: ${{ secrets.GH_TOKEN }}
-          path: 'chainlist'
-
-      - name: Create new branch for assets update
-        run: |
-          cd chainlist
-          git checkout -b update-assets-${{ github.run_id }}
-
-      - name: Replace assets.json with automated-assets.json
-        run: |
-          cp ./packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chainlist/chain/injective/assets.json
-
-      - name: Set up Git user
-        run: |
-          echo $GITHUB_ACTOR
-          git config --global user.name "$GITHUB_ACTOR"
-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
+#     permissions:
+#       deployments: write
+#       contents: write
+#       statuses: write
+#       actions: write
+#       checks: read
+#       pull-requests: write
 
 
-      - name: Commit and push changes
-        run: |
-          cd chainlist
-          git add chain/injective/assets.json
-          git commit -m "Automated update of assets.json"
-          git push -u origin update-assets-${{ github.run_id }}
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#     steps:
+#       - name: Checkout # Download code from the repository
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0 # Checkout all branches and tags
+
+#       - name: 'Use NodeJS 16'
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '16.18.1'
+
+#       - name: Checkout shane-moore/chainlist repository
+#         uses: actions/checkout@v3
+#         with:
+#           repository: 'shane-moore/chainlist'
+#           ref: 'main'
+#           token: ${{ secrets.GH_TOKEN }}
+#           path: 'chainlist'
+
+#       - name: Create new branch for assets update
+#         run: |
+#           cd chainlist
+#           git checkout -b update-assets-${{ github.run_id }}
+
+#       - name: Replace assets.json with automated-assets.json
+#         run: |
+#           cp ./packages/sdk-ui-ts/src/services/cosmostation-tokens/automated-assets.json ./chainlist/chain/injective/assets.json
+
+#       - name: Set up Git user
+#         run: |
+#           echo $GITHUB_ACTOR
+#           git config --global user.name "$GITHUB_ACTOR"
+#           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+#         env:
+#           GITHUB_ACTOR: ${{ github.actor }}
 
 
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          path: './chainlist'
-          title: 'Automate update of assets.json'
-          branch: 'update-assets-${{ github.run_id }}'
-          base: 'main'
-          body: 'This PR updates the assets.json with new token metadata'
-          labels: 'automated-pr'
+#       - name: Commit and push changes
+#         run: |
+#           cd chainlist
+#           git add chain/injective/assets.json
+#           git commit -m "Automated update of assets.json"
+#           git push -u origin update-assets-${{ github.run_id }}
+#         env:
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
+#       - name: Create pull request
+#         uses: peter-evans/create-pull-request@v3
+#         with:
+#           token: ${{ secrets.GH_TOKEN }}
+#           path: './chainlist'
+#           title: 'Automate update of assets.json'
+#           branch: 'update-assets-${{ github.run_id }}'
+#           base: 'main'
+#           body: 'This PR updates the assets.json with new token metadata'
+#           labels: 'automated-pr'
