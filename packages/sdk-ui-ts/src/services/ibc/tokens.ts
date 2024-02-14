@@ -67,10 +67,13 @@ function timeout(ms: number) {
       data: IbcTokenMetadata[]
     }>
 
-    const response = (await Promise.race([
-      ibcTokenMetadataResponse,
-      timeout(2000),
-    ])) as {
+    console.log({ ibcTokenMetadataResponse })
+
+    const testResponse = new Promise(() =>
+      setTimeout(() => console.log('hiii'), 3000),
+    )
+
+    const response = (await Promise.race([testResponse, timeout(2000)])) as {
       data: IbcTokenMetadata[]
     }
 
