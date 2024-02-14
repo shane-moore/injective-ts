@@ -4438,25 +4438,5 @@
       "isNative": false,
       "tokenType": "ibc"
     }
-  },
-  {
-    "name": "MYRK",
-    "denom": "ibc/48D1DA9AA68C949E27BAB39B409681292035ABF63EAB663017C7BEF98A3D118E",
-    "logo": "https://raw.githubusercontent.com/cosmos/chain-registry/master/odin/images/MYRK_Logo.png",
-    "symbol": "MYRK",
-    "decimals": 6,
-    "coinGeckoId": "",
-    "tokenType": "ibc",
-    "tokenVerification": "external",
-    "ibc": {
-      "hash": "48D1DA9AA68C949E27BAB39B409681292035ABF63EAB663017C7BEF98A3D118E",
-      "path": "",
-      "channelId": "",
-      "decimals": 6,
-      "symbol": "MYRK",
-      "baseDenom": "MYRK",
-      "isNative": false,
-      "tokenType": "ibc"
-    }
   }
 ]
