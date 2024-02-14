@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/token-utils",
+  "name": "@shane-moore/token-utils",
   "version": "1.14.6-beta.7",
   "description": "Token Utils is a package for querying different data about tokens",
   "sideEffects": false,

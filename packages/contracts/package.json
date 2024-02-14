@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/contracts",
+  "name": "@shane-moore/contracts",
   "description": "Contracts wrapper that can be reused throughout Injective's projects.",
   "version": "1.14.6-beta.8",
   "sideEffects": false,

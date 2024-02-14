@@ -1,5 +1,5 @@
 {
-  "name": "@injectivelabs/ts-types",
+  "name": "@shane-moore/ts-types",
   "description": "List of types that can be reused throughout Injective's projects.",
   "version": "1.14.6-beta.2",
   "sideEffects": false,
